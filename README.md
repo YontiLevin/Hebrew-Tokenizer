@@ -6,7 +6,7 @@ No batteries included - No dependencies needed!
 ```python
 import hebtok
 hebrew_text = "אתמול, 8.6.2018, בשעה 17:00 הלכתי עם אמא למכולת"
-tokens = hebtok.tokenize(text)
+tokens = hebtok.tokenize(text)  # tokenize returns a generator! 
 for token in tokens:
   print(token)
 
