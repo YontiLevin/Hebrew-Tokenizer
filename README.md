@@ -39,4 +39,4 @@ Found a special case where the tokenizer fails?
 4. Commit a pull request.  
 
 ### NLPH
-For other great Hebrew resources check out [NPLH](https://github.com/NLPH/NLPH_Resources)
+For other great Hebrew resources check out [NLPH](https://github.com/NLPH/NLPH_Resources)
