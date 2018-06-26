@@ -7,8 +7,8 @@ No batteries included - No dependencies needed!
 import hebtok
 hebrew_text = "אתמול, 8.6.2018, בשעה 17:00 הלכתי עם אמא למכולת"
 tokens = hebtok.tokenize(text)  # tokenize returns a generator! 
-for token in tokens:
-  print(token)
+for grp, token, token_num, (start_index, end_index) in tokens:
+  print(grp, token)
 
 >>> (HEB, 'אתמול')
 >>> (PUNC, ',' )
