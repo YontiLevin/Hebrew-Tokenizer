@@ -96,12 +96,27 @@ def repeated_letters(print_results=False):
     return compare('Repeated Letters', sentences, tokenization_ground_truth, print_results)
 
 
+def dash(print_results=False):
+    s1 = u'אני מודד אורך בס"מ ונפח בסמ"ק'
+    s1_gt = [(u'אני', u'HEB'), (u'מודד', u'HEB'), (u'אורך', u'HEB'), (u'בס"מ', u'HEB'),
+             (u'ונפח', u'HEB'), (u'בסמ"ק', u'HEB')]
+
+    s2 = u'i don\'t know and i can\'t tell'
+    s2_gt = [(u'i', u'ENG'), (u'don\'t', u'ENG'), (u'know', u'ENG'), (u'and', u'ENG'),
+             (u'i', u'ENG'), (u'can\'t', u'ENG'), (u'tell', u'ENG')]
+
+    sentences = [s1, s2]
+    tokenization_ground_truth = [s1_gt, s2_gt]
+    return compare('Repeated Letters', sentences, tokenization_ground_truth, print_results)
+
+
 class Test(unittest.TestCase):
     tests = {'A. Hebrew': hebrew,
              'B. English': hebrew_and_english,
              'C. Numbers_Dates_Hours': hebrew_and_numbers,
              'D. Drop_Line': drop_line,
-             'E. Repeated Letters': repeated_letters}
+             'E. Repeated Letters': repeated_letters,
+             'F. Dash': dash}
 
     def test_tokenizer(self):
         tests_results = {}
