@@ -13,7 +13,7 @@ PYTHON_VERSION_LESS_THAN_3 = PYTHON_VERSION < 3
 
 # scanner
 class Scanner:
-    def __init__(self, lexicon, flags=0):
+    def __init__(self, lexicon, group_names, flags=0, with_whitespaces=False):
         self.lexicon = []
         p = []
         s = Pattern()
@@ -32,6 +32,8 @@ class Scanner:
 
         p = SubPattern(s, [(BRANCH, (None, p))])
         self.scanner = sre_compile(p).scanner
+        self.with_whitespaces = with_whitespaces
+        self.group_names = group_names
 
     def scan(self, string):
         match = self.scanner(string).match
@@ -55,9 +57,12 @@ class Scanner:
                 grp_name = self.lexicon[m.lastindex - 1][1]
                 end_idx = m.end()
                 if grp_name:
-                    word = string[start_idx:end_idx]
-                    yield grp_name, word, token_num, (start_idx, end_idx)
-                    token_num += 1
+                    if grp_name == self.group_names.WHITESPACE and not self.with_whitespaces:
+                        pass
+                    else:
+                        word = string[start_idx:end_idx]
+                        yield grp_name, word, token_num, (start_idx, end_idx)
+                        token_num += 1
                 start_idx = end_idx
             breakaway_counter += 1
             # break after 10 continuous characters which doesn't many any pattern
@@ -67,44 +72,62 @@ class Scanner:
 
 
 # patterns
-heb = r"[א-ת]" + "{1,}[\']?[\"]*" + "[א-ת]" + "{1,}|" + "[א-ת]"
-eng = r"[a-zA-Z]{1,}[\']?[\"]*[a-zA-Z0-9]{1,}|[a-zA-Z][a-zA-Z0-9]*"
-hour = r"[0-2]?[0-9]:[0-5][0-9]"
-date1 = r"[0-9]{1,3}-[0-9]{1,3}-([1-2][0-9])?[0-9][0-9]"
-date2 = r"([0-9]{1,3}-)?[0-9]{1,3}[\./][0-9]{1,3}[\./]([1-2][0-9])?[0-9][0-9]"
-num = r"[+-]?[0-9]+[0-9/-]*[\.]?[0-9]+|[0-9]+%{0,1}"
-url = r"[a-z]+://\S+"
-email = r".+@.+\..+"
-punc = r"[,;:\-&!\?\.\]/)'`\"\*\+=_~}\[('`\"{/\\\<\>#]"
-bad_punc = r"[\'\"]"
-bom = r"\xef\xbb\xbf|\ufeff|\u200e"
-other = r"\xa0|\xe2?\x80\xa2?[[^׳-׳×a-zA-Z0-9!\?\.,:;\-()\[\]{}]+"
-whitespace = r"\s+"
-linebreaks = r"{3,}|".join(['\\' + x for x in ['*', '_', '.', '\\', '!', '+', '>', '<', '#', '^', '~', '=', '-']]) + '\n'
-repeated = r"\S*(.)\1{3,}\S*"
+_heb = r"[א-ת]" + "{1,}[\']?[\"]*" + "[א-ת]" + "{1,}|" + "[א-ת]"
+_eng = r"[a-zA-Z]{1,}[\']?[\"]*[a-zA-Z0-9]{1,}|[a-zA-Z][a-zA-Z0-9]*"
+_hour = r"[0-2]?[0-9]:[0-5][0-9]"
+_date1 = r"[0-9]{1,3}-[0-9]{1,3}-([1-2][0-9])?[0-9][0-9]"
+_date2 = r"([0-9]{1,3}-)?[0-9]{1,3}[\./][0-9]{1,3}[\./]([1-2][0-9])?[0-9][0-9]"
+_num = r"[+-]?[0-9]+[0-9/-]*[\.]?[0-9]+|[0-9]+%{0,1}"
+_url = r"[a-z]+://\S+"
+_email = r".+@.+\..+"
+_punc = r"[,;:\-&!\?\.\]/)'`\"\*\+=_~}\[('`\"{/\\\<\>#]"
+_bad_punc = r"[\'\"]"
+_bom = r"\xef\xbb\xbf|\ufeff|\u200e"
+_other = r"\xa0|\xe2?\x80\xa2?[[^׳-׳×a-zA-Z0-9!\?\.,:;\-()\[\]{}]+"
+_whitespace = r"\s+"
+_linebreaks = r"{3,}|".join(['\\' + x for x in ['*', '_', '.', '\\', '!', '+', '>', '<', '#', '^', '~', '=', '-']]) + '\n'
+_repeated = r"\S*(.)\1{3,}\S*"
 
+
+# group names
+class Groups(object):
+    WHITESPACE = 'WS'
+    DATE = 'DATE'
+    HOUR = 'HOUR'
+    NUMBER = 'NUM'
+    URL = 'URL'
+    PUNCTUATION = 'PUNC'
+    ENGLISH = 'ENG'
+    HEBREW = 'HEB'
+    OTHER = 'OTHER'
+
+
+# pattern 2 group mapping
 patterns = [
-    (whitespace, None),
-    (linebreaks, None),
-    (repeated, None),
-    (bom, None),
-    (date1, 'DATE'),
-    (date2, 'DATE'),
-    (hour, 'HOUR'),
-    (num, 'NUM'),
-    (url, 'URL'),
-    (punc, 'PUNC'),
-    (eng, 'ENG')]
+    (_whitespace, Groups.WHITESPACE),
+    (_linebreaks, None),
+    (_repeated, None),
+    (_bom, None),
+    (_date1, Groups.DATE),
+    (_date2, Groups.DATE),
+    (_hour, Groups.HOUR),
+    (_num, Groups.NUMBER),
+    (_url, Groups.URL),
+    (_punc, Groups.PUNCTUATION),
+    (_eng, Groups.ENGLISH)]
 
 if PYTHON_VERSION_LESS_THAN_3:
-    patterns += [(heb.decode('utf-8'), 'HEB')]
+    patterns += [(_heb.decode('utf-8'), Groups.HEBREW)]
 
 patterns += [
-    (heb, 'HEB'),
-    (other, 'OTHER')]
-
-scanner = Scanner(patterns)
+    (_heb, Groups.HEBREW),
+    (_other, Groups.OTHER)]
 
 
-def tokenize(text):
+# scanner definition
+scanner = Scanner(patterns, Groups)
+
+
+def tokenize(text, with_whitespaces=False):
+    scanner.with_whitespaces = with_whitespaces
     return scanner.scan(text)

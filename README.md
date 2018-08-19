@@ -20,6 +20,29 @@ for grp, token, token_num, (start_index, end_index) in tokens:
 >>> (HEB, 'עם')
 >>> (HEB, 'אמא')
 >>> (HEB, 'למכולת')
+
+# by default it doesn't return whitespaces but it can be done easily
+tokens = hebtok.tokenize(text, with_whitespaces=True)  # notice the with_whitespace flag
+for grp, token, token_num, (start_index, end_index) in tokens:
+  print(grp, token)
+
+>>> (HEB, 'אתמול')
+>>> (PUNC, ',' )
+>>> (WS, ' ')
+>>> (DATE, '8.6.2018')
+>>> (PUNC, ',' )
+>>> (WS, ' ')
+>>> (HEB, 'בשעה')
+>>> (WS, ' ')
+>>> (HOUR, '17:00')
+>>> (WS, ' ')
+>>> (HEB, 'הלכתי')
+>>> (WS, ' ')
+>>> (HEB, 'עם')
+>>> (WS, ' ')
+>>> (HEB, 'אמא')
+>>> (WS, ' ')
+>>> (HEB, 'למכולת')
 ```
 
 ### Installation

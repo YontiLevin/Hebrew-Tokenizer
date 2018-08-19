@@ -4,9 +4,9 @@ import unittest
 from hebtok import tokenize
 
 
-def compare(test_name, sentences, tokenization_ground_truth, print_results=False):
+def compare(test_name, sentences, tokenization_ground_truth, print_results=False, with_whitespaces=False):
     for n, (s, s_ground_truth) in enumerate(zip(sentences, tokenization_ground_truth)):
-        s_tokens = [(t, grp) for grp, t, _, _ in tokenize(s)]
+        s_tokens = [(t, grp) for grp, t, _, _ in tokenize(s, with_whitespaces=with_whitespaces)]
 
         if print_results:
             print('\n{test_name} test #{n}'.format(test_name=test_name, n=n))
@@ -110,13 +110,28 @@ def dash(print_results=False):
     return compare('Repeated Letters', sentences, tokenization_ground_truth, print_results)
 
 
+def whitespace(print_results=False):
+    s1 = u'אני מודד אורך בס"מ ונפח בסמ"ק.'
+    s1_gt = [(u'אני', u'HEB'), (u' ', u'WS'), (u'מודד', u'HEB'), (u' ', u'WS'), (u'אורך', u'HEB'), (u' ', u'WS'),
+             (u'בס"מ', u'HEB'), (u' ', u'WS'), (u'ונפח', u'HEB'), (u' ', u'WS'), (u'בסמ"ק', u'HEB'), (u'.', u'PUNC')]
+
+    s2 = u'לחשוב - Never tried that before.'
+    s2_gt = [(u'לחשוב', u'HEB'), (u' ', u'WS'), (u'-', u'PUNC'), (u' ', u'WS'), (u'Never', u'ENG'), (u' ', u'WS'),
+             (u'tried', u'ENG'), (u' ', u'WS'), (u'that', u'ENG'), (u' ', u'WS'), (u'before', u'ENG'), (u'.', u'PUNC')]
+
+    sentences = [s1, s2]
+    tokenization_ground_truth = [s1_gt, s2_gt]
+    return compare('Repeated Letters', sentences, tokenization_ground_truth, print_results, with_whitespaces=True)
+
+
 class Test(unittest.TestCase):
     tests = {'A. Hebrew': hebrew,
              'B. English': hebrew_and_english,
              'C. Numbers_Dates_Hours': hebrew_and_numbers,
              'D. Drop_Line': drop_line,
              'E. Repeated Letters': repeated_letters,
-             'F. Dash': dash}
+             'F. Dash': dash,
+             'G. White_Space': whitespace}
 
     def test_tokenizer(self):
         tests_results = {}
