@@ -126,4 +126,3 @@ class Test(unittest.TestCase):
             print('{test_name:25s} {test_results}'
                   .format(test_name=test_name, test_results=result.__str__()))
         assert all(tests_results.values()), 'One of the tests failed'
-
