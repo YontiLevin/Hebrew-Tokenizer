@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 import unittest
-from hebtok import tokenize
+from hebrew_tokenizer import tokenize
 
 
 def compare(test_name, sentences, tokenization_ground_truth, print_results=False, with_whitespaces=False):
