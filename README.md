@@ -4,9 +4,9 @@ No batteries included - No dependencies needed!
 
 ### Usage
 ```python
-import hebtok
+import hebrew_tokenizer as ht
 hebrew_text = "אתמול, 8.6.2018, בשעה 17:00 הלכתי עם אמא למכולת"
-tokens = hebtok.tokenize(text)  # tokenize returns a generator! 
+tokens = ht.tokenize(text)  # tokenize returns a generator!
 for grp, token, token_num, (start_index, end_index) in tokens:
   print(grp, token)
 
@@ -22,7 +22,7 @@ for grp, token, token_num, (start_index, end_index) in tokens:
 >>> (HEB, 'למכולת')
 
 # by default it doesn't return whitespaces but it can be done easily
-tokens = hebtok.tokenize(text, with_whitespaces=True)  # notice the with_whitespace flag
+tokens = ht.tokenize(text, with_whitespaces=True)  # notice the with_whitespace flag
 for grp, token, token_num, (start_index, end_index) in tokens:
   print(grp, token)
 
