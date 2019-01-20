@@ -74,6 +74,7 @@ class Scanner:
 # patterns
 _heb = r"[א-ת]" + "{1,}[\']?[\"]*" + "[א-ת]" + "{1,}|" + "[א-ת]"
 _eng = r"[a-zA-Z]{1,}[\']?[\"]*[a-zA-Z0-9]{1,}|[a-zA-Z][a-zA-Z0-9]*"
+_eng_abbrev = r"[a-zA-Z]{1}\.[a-zA-Z]{1}(\.[a-zA-Z]){0,1}"
 _hour = r"[0-2]?[0-9]:[0-5][0-9]"
 _date1 = r"[0-9]{1,3}-[0-9]{1,3}-([1-2][0-9])?[0-9][0-9]"
 _date2 = r"([0-9]{1,3}-)?[0-9]{1,3}[\./][0-9]{1,3}[\./]([1-2][0-9])?[0-9][0-9]"
@@ -113,6 +114,7 @@ patterns = [
     (_hour, Groups.HOUR),
     (_num, Groups.NUMBER),
     (_url, Groups.URL),
+    (_eng_abbrev, Groups.ENGLISH),
     (_punc, Groups.PUNCTUATION),
     (_eng, Groups.ENGLISH)]
 

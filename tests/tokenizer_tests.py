@@ -124,6 +124,20 @@ def whitespace(print_results=False):
     return compare('Repeated Letters', sentences, tokenization_ground_truth, print_results, with_whitespaces=True)
 
 
+def abbreviations(print_results=False):
+    s1 = u'He went to see the E.N.T'
+    s1_gt = [(u'He', u'ENG'), (u'went', u'ENG'), (u'to', u'ENG'), (u'see', u'ENG'),
+             (u'the', u'ENG'), (u'E.N.T', u'ENG')]
+    s2 = u'e.g, I can eat a gallon of ice cream.'
+    s2_gt = [(u'e.g', u'ENG'), (u',', u'PUNC'), (u'I', u'ENG'), (u'can', u'ENG'),
+             (u'eat', u'ENG'), (u'a', u'ENG'), (u'gallon', u'ENG'), (u'of', u'ENG'),
+             (u'ice', u'ENG'), (u'cream', u'ENG'), (u'.', u'PUNC')]
+
+    sentences = [s1, s2]
+    tokenization_ground_truth = [s1_gt, s2_gt]
+    return compare('Repeated Letters', sentences, tokenization_ground_truth, print_results, with_whitespaces=False)
+
+
 class Test(unittest.TestCase):
     tests = {'A. Hebrew': hebrew,
              'B. English': hebrew_and_english,
@@ -131,12 +145,13 @@ class Test(unittest.TestCase):
              'D. Drop_Line': drop_line,
              'E. Repeated Letters': repeated_letters,
              'F. Dash': dash,
-             'G. White_Space': whitespace}
+             'G. White_Space': whitespace,
+             'H. Abbrevations': abbreviations}
 
     def test_tokenizer(self):
         tests_results = {}
         for test_name, test_func in sorted(self.tests.items()):
-            result = test_func(print_results=False)
+            result = test_func(print_results=True)
             tests_results[test_name] = result
             print('{test_name:25s} {test_results}'
                   .format(test_name=test_name, test_results=result.__str__()))
