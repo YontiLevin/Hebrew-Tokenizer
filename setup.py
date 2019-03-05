@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-
+from io import open
 from setuptools import setup, find_packages
 
 
@@ -12,11 +12,13 @@ DESCRIPTION = 'A very simple python tokenizer for Hebrew text'
 URL = 'https://github.com/yontilevin/hebrew_tokenizer'
 EMAIL = 'therealyontilevin@gmail.com'
 AUTHOR = 'Yonti Levin'
-VERSION = '0.0.2'
+VERSION = '0.0.4'
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
-
+# with open("README.md", "r", encoding='utf8') as fh:
+#     long_description = fh.read()
+long_description = """
+go to github for more info
+"""
 here = os.path.abspath(os.path.dirname(__file__))
 
 # Where the magic happens:
@@ -41,7 +43,7 @@ setup(
         # 'Programming Language :: Python :: 3',
         # 'Programming Language :: Python :: 3.4',
         # 'Programming Language :: Python :: 3.5',
-        # 'Programming Language :: Python :: 3.6',
+        # Programming Language :: Python :: 3.6',
         "Operating System :: OS Independent",
 
     ],

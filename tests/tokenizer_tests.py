@@ -9,7 +9,7 @@ def compare(test_name, sentences, tokenization_ground_truth, print_results=False
         s_tokens = [(t, grp) for grp, t, _, _ in tokenize(s, with_whitespaces=with_whitespaces)]
 
         if print_results:
-            print('\n{test_name} test #{n}'.format(test_name=test_name, n=n))
+            print('\n{test_name} test#{n}'.format(test_name=test_name, n=n))
             for t, gt in zip(s_tokens, s_ground_truth):
                 res = (u'!=', u'X') if t[1] != gt[1] or t[0] != gt[0] else (u'==', u'\N{check mark}')
                 print(u'{}({}) {}({}) {}'.format(t[0], t[1], res[0], gt[0], gt[1], res[1]))
@@ -61,9 +61,13 @@ def hebrew_and_numbers(print_results=False):
              (u'17', u'NUM'), (u':', u'PUNC'), (u'90', u'NUM'), (u'זו', u'HEB'),
              (u'לא', u'HEB'), (u'שעה', u'HEB'), (u'ו', u'HEB'), (u'17:15', u'HOUR'), (u'.', u'PUNC')]
 
-    sentences = [s1, s2]
-    tokenization_ground_truth = [s1_gt, s2_gt]
-    return compare('Hebrew and English', sentences, tokenization_ground_truth, print_results)
+    s3 = u' אני הכי אוהב לאכול קוטג 2.5% של תנובה.'
+    s3_gt = [(u'אני', u'HEB'), (u'הכי', u'HEB'), (u'אוהב', u'HEB'), (u'לאכול', u'HEB'), (u'קוטג', u'HEB'),
+             (u'2.5%', u'NUM'),  (u'של', u'HEB'), (u'תנובה', u'HEB'), (u'.', u'PUNC')]
+
+    sentences = [s1, s2, s3]
+    tokenization_ground_truth = [s1_gt, s2_gt, s3_gt]
+    return compare('Hebrew and Numbers', sentences, tokenization_ground_truth, print_results)
 
 
 def drop_line(print_results=False):
@@ -107,7 +111,7 @@ def dash(print_results=False):
 
     sentences = [s1, s2]
     tokenization_ground_truth = [s1_gt, s2_gt]
-    return compare('Repeated Letters', sentences, tokenization_ground_truth, print_results)
+    return compare('Dash', sentences, tokenization_ground_truth, print_results)
 
 
 def whitespace(print_results=False):
@@ -121,7 +125,7 @@ def whitespace(print_results=False):
 
     sentences = [s1, s2]
     tokenization_ground_truth = [s1_gt, s2_gt]
-    return compare('Repeated Letters', sentences, tokenization_ground_truth, print_results, with_whitespaces=True)
+    return compare('Whitespace', sentences, tokenization_ground_truth, print_results, with_whitespaces=True)
 
 
 def abbreviations(print_results=False):
@@ -135,7 +139,7 @@ def abbreviations(print_results=False):
 
     sentences = [s1, s2]
     tokenization_ground_truth = [s1_gt, s2_gt]
-    return compare('Repeated Letters', sentences, tokenization_ground_truth, print_results, with_whitespaces=False)
+    return compare('Abbreviations', sentences, tokenization_ground_truth, print_results, with_whitespaces=False)
 
 
 class Test(unittest.TestCase):
@@ -153,6 +157,6 @@ class Test(unittest.TestCase):
         for test_name, test_func in sorted(self.tests.items()):
             result = test_func(print_results=True)
             tests_results[test_name] = result
-            print('{test_name:25s} {test_results}'
-                  .format(test_name=test_name, test_results=result.__str__()))
+            print('\n{test_name:25s} {test_results}\n{line_breaker}'
+                  .format(test_name=test_name, test_results=result.__str__(), line_breaker="-"*50))
         assert all(tests_results.values()), 'One of the tests failed'
