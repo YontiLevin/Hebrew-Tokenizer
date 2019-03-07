@@ -87,7 +87,7 @@ _bom = r"\xef\xbb\xbf|\ufeff|\u200e"
 _other = r"\xa0|\xe2?\x80\xa2?[[^׳-׳×a-zA-Z0-9!\?\.,:;\-()\[\]{}]+"
 _whitespace = r"\s+"
 _linebreaks = r"{3,}|".join(['\\' + x for x in ['*', '_', '.', '\\', '!', '+', '>', '<', '#', '^', '~', '=', '-']]) + '\n'
-_repeated = r"\S*(.)\1{3,}\S*"
+_repeated = r"\S*(\S)\1{3,}\S*"
 
 
 # group names
@@ -133,3 +133,11 @@ scanner = Scanner(patterns, Groups)
 def tokenize(text, with_whitespaces=False):
     scanner.with_whitespaces = with_whitespaces
     return scanner.scan(text)
+
+
+if __name__ == '__main__':
+    sent = 'aspirin   aaaaaa  aaaaaaaaaaa   dipyridamole'
+    sent_tokens = tokenize(sent)
+    for st in sent_tokens:
+        print(st)
+
