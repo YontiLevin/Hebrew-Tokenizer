@@ -4,8 +4,7 @@ No batteries included - No dependencies needed!
 
 ### Installation
 1. via pip
-    1. at the moment the project sits at https://test.pypi.org/project/hebrew-tokenizer/
-    2. ```pip install -i https://test.pypi.org/simple/ hebrew-tokenizer```
+    1. ```pip install hebrew_tokenizer```
 2. from source
     1. Download / Clone
     2. ```python setup.py install```
