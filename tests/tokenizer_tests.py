@@ -9,7 +9,7 @@ def compare(test_name, sentences, tokenization_ground_truth, print_results=False
         s_tokens = [(t, grp) for grp, t, _, _ in tokenize(s, with_whitespaces=with_whitespaces)]
 
         if print_results:
-            print('\n{test_name} test#{n}'.format(test_name=test_name, n=n))
+            print('\n{test_name} test#{n}'.format(test_name=test_name, n=n+1))
             for t, gt in zip(s_tokens, s_ground_truth):
                 res = (u'!=', u'X') if t[1] != gt[1] or t[0] != gt[0] else (u'==', u'\N{check mark}')
                 print(u'{}({}) {}({}) {}'.format(t[0], t[1], res[0], gt[0], gt[1], res[1]))
@@ -100,7 +100,7 @@ def repeated_letters(print_results=False):
     return compare('Repeated Letters', sentences, tokenization_ground_truth, print_results)
 
 
-def dash(print_results=False):
+def quotation_mark(print_results=False):
     s1 = u'אני מודד אורך בס"מ ונפח בסמ"ק'
     s1_gt = [(u'אני', u'HEB'), (u'מודד', u'HEB'), (u'אורך', u'HEB'), (u'בס"מ', u'HEB'),
              (u'ונפח', u'HEB'), (u'בסמ"ק', u'HEB')]
@@ -111,7 +111,7 @@ def dash(print_results=False):
 
     sentences = [s1, s2]
     tokenization_ground_truth = [s1_gt, s2_gt]
-    return compare('Dash', sentences, tokenization_ground_truth, print_results)
+    return compare('Quotation_mark', sentences, tokenization_ground_truth, print_results)
 
 
 def whitespace(print_results=False):
@@ -142,15 +142,28 @@ def abbreviations(print_results=False):
     return compare('Abbreviations', sentences, tokenization_ground_truth, print_results, with_whitespaces=False)
 
 
+def dash(print_results=False):
+    s1 = u'אני רוצה לבדוק עברית-מודרנית'
+    s1_gt = [(u'אני', u'HEB'), (u'רוצה', u'HEB'), (u'לבדוק', u'HEB'), (u'עברית', u'HEB'), (u'-', u'PUNC'),
+             (u'מודרנית', u'HEB')]
+
+    s2 = u'מערבית-מודרנית'
+    s2_gt = [(u'מערבית', u'HEB'), (u'-', u'PUNC'), (u'מודרנית', u'HEB')]
+    sentences = [s1, s2]
+    tokenization_ground_truth = [s1_gt, s2_gt]
+    return compare('Dash', sentences, tokenization_ground_truth, print_results, with_whitespaces=False)
+
+
 class Test(unittest.TestCase):
     tests = {'A. Hebrew': hebrew,
              'B. English': hebrew_and_english,
              'C. Numbers_Dates_Hours': hebrew_and_numbers,
              'D. Drop_Line': drop_line,
              'E. Repeated Letters': repeated_letters,
-             'F. Dash': dash,
+             'F. Quotation_mark': quotation_mark,
              'G. White_Space': whitespace,
-             'H. Abbrevations': abbreviations}
+             'H. Abbreviations': abbreviations,
+             'I. Dash': dash}
 
     def test_tokenizer(self):
         tests_results = {}
