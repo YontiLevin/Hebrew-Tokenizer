@@ -36,39 +36,42 @@ class Scanner:
         self.group_names = group_names
 
     def scan(self, string):
-        match = self.scanner(string).match
-        start_idx = 0
+        global_idx, start_idx, end_idx = 0, 0, 0
         token_num = 0
-        start_flag = False
         breakaway_counter = 0
-        while start_idx < len(string):
+        string_len = len(string)
+        while start_idx < string_len:
+            add_global_idx_flag = False
+            match = self.scanner(string[start_idx:]).match
             matches = [m for m in iter(match, None)]
             for m in matches:
-                if start_flag:
-                    unknown_start_idx = m.start()
-                    unknown_start_encoding = string[start_idx:unknown_start_idx]
-                    if len(unknown_start_encoding):
-                        yield 'UNKNOWN', unknown_start_encoding, token_num, (start_idx, unknown_start_idx)
-                        token_num += 1
-                    start_flag = False
-                    start_idx = unknown_start_idx
-                    breakaway_counter = 0
-
                 grp_name = self.lexicon[m.lastindex - 1][1]
                 end_idx = m.end()
+
                 if grp_name:
                     if grp_name == self.group_names.WHITESPACE and not self.with_whitespaces:
                         pass
                     else:
-                        word = string[start_idx:end_idx]
-                        yield grp_name, word, token_num, (start_idx, end_idx)
+                        _start_idx = start_idx
+                        if add_global_idx_flag:
+                            _start_idx += global_idx
+                        word = string[_start_idx:end_idx+global_idx]
+                        yield grp_name, word, token_num, (_start_idx, end_idx+global_idx)
                         token_num += 1
+
                 start_idx = end_idx
-            breakaway_counter += 1
-            # break after 10 continuous characters which doesn't many any pattern
-            if breakaway_counter > 10:
+                add_global_idx_flag = True
+
+            if end_idx < global_idx:
+                start_idx += global_idx
+            if start_idx >= string_len:
                 break
-            start_flag = True
+            end_idx = start_idx+1
+            unknown_token = string[start_idx:end_idx]
+            yield 'UNKNOWN', unknown_token, token_num, (start_idx, end_idx)
+            token_num += 1
+            start_idx = end_idx
+            global_idx = start_idx
 
 
 # patterns
@@ -81,7 +84,7 @@ _date2 = r"([0-9]{1,3}-)?[0-9]{1,3}[\./][0-9]{1,3}[\./]([1-2][0-9])?[0-9][0-9]"
 _num = r"[+-]?([0-9]+[0-9/-]*[\.]?[0-9]+|[0-9]+)%{0,1}"
 _url = r"[a-z]+://\S+"
 _email = r".+@.+\..+"
-_punc = r"[,;:\-&!\?\.\]/)'`\"\*\+=_~}\[('`\"{/\\\<\>#%]"
+_punc = r"[,;:\-&!\?\.\]/)'`\"\*\+=_~}\[('`\"{/\\\<\>#%]" #—–]"
 _bad_punc = r"[\'\"]"
 _bom = r"\xef\xbb\xbf|\ufeff|\u200e"
 _other = r"\xa0|\xe2?\x80\xa2?[[^׳-׳×a-zA-Z0-9!\?\.,:;\-()\[\]{}]+"
@@ -136,7 +139,7 @@ def tokenize(text, with_whitespaces=False):
 
 
 if __name__ == '__main__':
-    sent = 'aspirin   aaaaaa  aaaaaaaaaaa   dipyridamole'
+    sent = 'aspirin   aaaaaa  aaaaaaaaaaa —–  dipyridamole'
     sent_tokens = tokenize(sent)
     for st in sent_tokens:
         print(st)
