@@ -1,3 +1,7 @@
+[![PyPI download total](https://img.shields.io/pypi/dm/hebrew-tokenizer.svg)](https://pypi.python.org/pypi/hebrew-tokenizer/)  [![PyPI version fury.io](https://badge.fury.io/py/hebrew-tokenizer.svg)](https://pypi.python.org/pypi/hebrew-tokenizer/)
+ [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/) 
+
+
 # Hebrew Tokenizer
 A very simple python tokenizer for Hebrew text.  
 No batteries included - No dependencies needed!
