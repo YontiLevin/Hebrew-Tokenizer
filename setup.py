@@ -12,7 +12,7 @@ DESCRIPTION = 'A very simple python tokenizer for Hebrew text'
 URL = 'https://github.com/yontilevin/hebrew_tokenizer'
 EMAIL = 'therealyontilevin@gmail.com'
 AUTHOR = 'Yonti Levin'
-VERSION = '1.0.1'
+VERSION = '1.0.2'
 
 # with open("README.md", "r", encoding='utf8') as fh:
 #     long_description = fh.read()
