@@ -147,8 +147,8 @@ def dash(print_results=False):
     s1_gt = [(u'אני', u'HEB'), (u'רוצה', u'HEB'), (u'לבדוק', u'HEB'), (u'עברית', u'HEB'), (u'-', u'PUNC'),
              (u'מודרנית', u'HEB')]
 
-    s2 = u'מערבית-מודרנית'
-    s2_gt = [(u'מערבית', u'HEB'), (u'-', u'PUNC'), (u'מודרנית', u'HEB')]
+    s2 = u'מערבית־מודרנית'
+    s2_gt = [(u'מערבית', u'HEB'), (u'־', u'PUNC'), (u'מודרנית', u'HEB')]
     sentences = [s1, s2]
     tokenization_ground_truth = [s1_gt, s2_gt]
     return compare('Dash', sentences, tokenization_ground_truth, print_results, with_whitespaces=False)
