@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
 import sys
-
 from hebrew_tokenizer.tokenizer import tokenizer
 
 

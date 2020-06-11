@@ -1,14 +1,12 @@
-from enum import Enum
-
-# group names
+from enum import Enum, auto
 class Groups(Enum):
-    Whitespace = 1
-    Date = 2
-    Hour = 3
-    Number = 4
-    URL = 5
-    Punctuation = 6
-    English = 7
-    Hebrew = 9
-    Other = 10
+    WHITESPACE = auto()
+    DATE = auto()
+    HOUR = auto()
+    NUMBER = auto()
+    URL = auto()
+    PUNCTUATION = auto()
+    ENGLISH = auto()
+    HEBREW = auto()
+    OTHER = auto()
 

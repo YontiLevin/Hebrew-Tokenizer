@@ -47,7 +47,7 @@ class Tokenizer:
                 end_idx = m.end()
 
                 if grp_name:
-                    if grp_name == self.groups.Whitespace and not self.with_whitespaces:
+                    if grp_name == self.groups.WHITESPACE and not self.with_whitespaces:
                         pass
                     else:
                         _start_idx = start_idx
