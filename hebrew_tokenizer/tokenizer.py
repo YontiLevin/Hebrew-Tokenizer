@@ -1,22 +1,30 @@
+import sys
 from sre_constants import BRANCH, SUBPATTERN
 from sre_compile import compile as sre_compile
 from sre_parse import Pattern, SubPattern, parse
 
+from hebrew_tokenizer.lexicon import get_lexicon
+from hebrew_tokenizer.groups import Groups
+
+
+PYTHON_VERSION = sys.version_info.major
+PYTHON_VERSION_LESS_THAN_3 = PYTHON_VERSION < 3
 
 class Tokenizer:
-    def __init__(self, lexicon, group_names, flags=0, with_whitespaces=False, python_version_less_than_3=False):
-        self.lexicon = []
+    def __init__(self, flags=0, with_whitespaces=False):
+        self.lexicon = get_lexicon(PYTHON_VERSION_LESS_THAN_3)
+        self.groups = Groups
+
         p = []
         s = Pattern()
         s.flags = flags
-        if python_version_less_than_3:
-            s.groups = len(lexicon) + 1
-            for group, (phrase, name) in enumerate(lexicon, 1):
+        if PYTHON_VERSION_LESS_THAN_3:
+            s.groups = len(self.lexicon) + 1
+            for group, (phrase, name) in enumerate(self.lexicon, 1):
                 p.append(SubPattern(s, [(SUBPATTERN, (group, parse(phrase, flags))), ]))
                 self.lexicon.append((group-1, name))
         else:
-            self.lexicon = lexicon
-            for phrase, name in lexicon:
+            for phrase, name in self.lexicon:
                 gid = s.opengroup()
                 p.append(SubPattern(s, [(SUBPATTERN, (gid, 0, 0, parse(phrase, flags))), ]))
                 s.closegroup(gid, p[-1])
@@ -24,7 +32,6 @@ class Tokenizer:
         p = SubPattern(s, [(BRANCH, (None, p))])
         self.scanner = sre_compile(p).scanner
         self.with_whitespaces = with_whitespaces
-        self.group_names = group_names
 
     def tokenize(self, string):
         global_idx, start_idx, end_idx = 0, 0, 0
@@ -40,7 +47,7 @@ class Tokenizer:
                 end_idx = m.end()
 
                 if grp_name:
-                    if grp_name == self.group_names.WHITESPACE and not self.with_whitespaces:
+                    if grp_name == self.groups.Whitespace and not self.with_whitespaces:
                         pass
                     else:
                         _start_idx = start_idx
@@ -64,5 +71,4 @@ class Tokenizer:
             start_idx = end_idx
             global_idx = start_idx
 
-
-
+tokenizer = Tokenizer()

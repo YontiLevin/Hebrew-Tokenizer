@@ -26,24 +26,24 @@ _repeated = r"\S*(\S)\1{3,}\S*"
 def get_lexicon(python_version_less_than_3=False):
     # the expected (pattern, group mapping) format for the tokenizer
     lexicon = [
-        (_whitespace, Groups.WHITESPACE),
+        (_whitespace, Groups.Whitespace),
         (_linebreaks, None),
         (_repeated, None),
         (_bom, None),
-        (_date1, Groups.DATE),
-        (_date2, Groups.DATE),
-        (_hour, Groups.HOUR),
-        (_num, Groups.NUMBER),
+        (_date1, Groups.Date),
+        (_date2, Groups.Date),
+        (_hour, Groups.Hour),
+        (_num, Groups.Number),
         (_url, Groups.URL),
-        (_eng_abbrev, Groups.ENGLISH),
-        (_punc, Groups.PUNCTUATION),
-        (_eng, Groups.ENGLISH)]
+        (_eng_abbrev, Groups.English),
+        (_punc, Groups.Punctuation),
+        (_eng, Groups.English)]
 
     if python_version_less_than_3:
-        lexicon += [(_heb.decode('utf-8'), Groups.HEBREW)]
+        lexicon += [(_heb.decode('utf-8'), Groups.Hebrew)]
 
     lexicon += [
-        (_heb, Groups.HEBREW),
-        (_other, Groups.OTHER)]
+        (_heb, Groups.Hebrew),
+        (_other, Groups.Other)]
 
     return lexicon

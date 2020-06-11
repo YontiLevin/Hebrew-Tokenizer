@@ -2,6 +2,7 @@
 # encoding: utf-8
 import unittest
 from hebrew_tokenizer import tokenize
+from hebrew_tokenizer.groups import Groups
 
 
 def compare(test_name, sentences, tokenization_ground_truth, print_results=False, with_whitespaces=False):
@@ -23,13 +24,16 @@ def compare(test_name, sentences, tokenization_ground_truth, print_results=False
 
 def hebrew(print_results=False):
     s1 = u'לדוגמא, ניסיון להדיח את ח"כ השכל בשל חוק המרכולים'
-    s1_gt = [(u'לדוגמא', u'HEB'), (u',', u'PUNC'), (u'ניסיון', u'HEB'), (u'להדיח', u'HEB'), (u'את', u'HEB'),
-             (u'ח"כ', u'HEB'), (u'השכל', u'HEB'), (u'בשל', u'HEB'), (u'חוק', u'HEB'), (u'המרכולים', u'HEB')]
+    s1_gt = [(u'לדוגמא', Groups.Hebrew), (u',', Groups.Punctuation), (u'ניסיון', Groups.Hebrew), 
+             (u'להדיח', Groups.Hebrew), (u'את', Groups.Hebrew), (u'ח"כ', Groups.Hebrew), 
+             (u'השכל', Groups.Hebrew), (u'בשל', Groups.Hebrew), (u'חוק', Groups.Hebrew), 
+             (u'המרכולים', Groups.Hebrew)]
 
     s2 = u'אנשים שהולכים בשבת בבוקר לבית הכנסת ובצהריים יושבים בבית קפה. נקודה'
-    s2_gt = [(u'אנשים', u'HEB'), (u'שהולכים', u'HEB'), (u'בשבת', u'HEB'), (u'בבוקר', u'HEB'), (u'לבית', u'HEB'),
-             (u'הכנסת', u'HEB'), (u'ובצהריים', u'HEB'), (u'יושבים', u'HEB'), (u'בבית', u'HEB'), (u'קפה', u'HEB'),
-             (u'.', u'PUNC'), (u'נקודה', u'HEB')]
+    s2_gt = [(u'אנשים', Groups.Hebrew), (u'שהולכים', Groups.Hebrew), (u'בשבת', Groups.Hebrew), 
+             (u'בבוקר', Groups.Hebrew), (u'לבית', Groups.Hebrew), (u'הכנסת', Groups.Hebrew), 
+             (u'ובצהריים', Groups.Hebrew), (u'יושבים', Groups.Hebrew), (u'בבית', Groups.Hebrew), 
+             (u'קפה', Groups.Hebrew), (u'.', Groups.Punctuation), (u'נקודה', Groups.Hebrew)]
 
     sentences = [s1, s2]
     tokenization_ground_truth = [s1_gt, s2_gt]
@@ -38,13 +42,14 @@ def hebrew(print_results=False):
 
 def hebrew_and_english(print_results=False):
     s1 = u'עמרי כספי נשלח מקבוצתו Golden State Warriors לקבוצת Minnesota Timberwolfs'
-    s1_gt = [(u'עמרי', u'HEB'), (u'כספי', u'HEB'), (u'נשלח', u'HEB'), (u'מקבוצתו', u'HEB'), (u'Golden', u'ENG'),
-             (u'State', u'ENG'), (u'Warriors', u'ENG'), (u'לקבוצת', u'HEB'), (u'Minnesota', u'ENG'),
-             (u'Timberwolfs', u'ENG')]
+    s1_gt = [(u'עמרי', Groups.Hebrew), (u'כספי', Groups.Hebrew), (u'נשלח', Groups.Hebrew), 
+             (u'מקבוצתו', Groups.Hebrew), (u'Golden', Groups.English), (u'State', Groups.English), 
+             (u'Warriors', Groups.English), (u'לקבוצת', Groups.Hebrew), (u'Minnesota', Groups.English),
+             (u'Timberwolfs', Groups.English)]
 
     s2 = u'לחשוב - Never tried that before.'
-    s2_gt = [(u'לחשוב', u'HEB'), (u'-', u'PUNC'), (u'Never', u'ENG'), (u'tried', u'ENG'), (u'that', u'ENG'),
-             (u'before', u'ENG'), (u'.', u'PUNC')]
+    s2_gt = [(u'לחשוב', Groups.Hebrew), (u'-', Groups.Punctuation), (u'Never', Groups.English), (u'tried', Groups.English), (u'that', Groups.English),
+             (u'before', Groups.English), (u'.', Groups.Punctuation)]
 
     sentences = [s1, s2]
     tokenization_ground_truth = [s1_gt, s2_gt]
@@ -53,17 +58,17 @@ def hebrew_and_english(print_results=False):
 
 def hebrew_and_numbers(print_results=False):
     s1 = u'אתמול ב5 אחה"צ, יצאתי עם אמא למכולת'
-    s1_gt = [(u'אתמול', u'HEB'), (u'ב', u'HEB'), (u'5', u'NUM'), (u'אחה"צ', u'HEB'), (u',', u'PUNC'),
-             (u'יצאתי', u'HEB'), (u'עם', u'HEB'), (u'אמא', u'HEB'), (u'למכולת', u'HEB')]
+    s1_gt = [(u'אתמול', Groups.Hebrew), (u'ב', Groups.Hebrew), (u'5', Groups.Number), (u'אחה"צ', Groups.Hebrew), (u',', Groups.Punctuation),
+             (u'יצאתי', Groups.Hebrew), (u'עם', Groups.Hebrew), (u'אמא', Groups.Hebrew), (u'למכולת', Groups.Hebrew)]
 
     s2 = u' אתמול ב17:00 אבל 17:90 זו לא שעה ו17:15.'
-    s2_gt = [(u'אתמול', u'HEB'), (u'ב', u'HEB'), (u'17:00', u'HOUR'), (u'אבל', u'HEB'),
-             (u'17', u'NUM'), (u':', u'PUNC'), (u'90', u'NUM'), (u'זו', u'HEB'),
-             (u'לא', u'HEB'), (u'שעה', u'HEB'), (u'ו', u'HEB'), (u'17:15', u'HOUR'), (u'.', u'PUNC')]
+    s2_gt = [(u'אתמול', Groups.Hebrew), (u'ב', Groups.Hebrew), (u'17:00', Groups.Hour), (u'אבל', Groups.Hebrew),
+             (u'17', Groups.Number), (u':', Groups.Punctuation), (u'90', Groups.Number), (u'זו', Groups.Hebrew),
+             (u'לא', Groups.Hebrew), (u'שעה', Groups.Hebrew), (u'ו', Groups.Hebrew), (u'17:15', Groups.Hour), (u'.', Groups.Punctuation)]
 
     s3 = u' אני הכי אוהב לאכול קוטג 2.5% של תנובה.'
-    s3_gt = [(u'אני', u'HEB'), (u'הכי', u'HEB'), (u'אוהב', u'HEB'), (u'לאכול', u'HEB'), (u'קוטג', u'HEB'),
-             (u'2.5%', u'NUM'),  (u'של', u'HEB'), (u'תנובה', u'HEB'), (u'.', u'PUNC')]
+    s3_gt = [(u'אני', Groups.Hebrew), (u'הכי', Groups.Hebrew), (u'אוהב', Groups.Hebrew), (u'לאכול', Groups.Hebrew), (u'קוטג', Groups.Hebrew),
+             (u'2.5%', Groups.Number),  (u'של', Groups.Hebrew), (u'תנובה', Groups.Hebrew), (u'.', Groups.Punctuation)]
 
     sentences = [s1, s2, s3]
     tokenization_ground_truth = [s1_gt, s2_gt, s3_gt]
@@ -72,13 +77,15 @@ def hebrew_and_numbers(print_results=False):
 
 def drop_line(print_results=False):
     s1 = u'אתמול ב5 אחה"צ,\n יצאתי עם אמא למכולת'
-    s1_gt = [(u'אתמול', u'HEB'), (u'ב', u'HEB'), (u'5', u'NUM'), (u'אחה"צ', u'HEB'), (u',', u'PUNC'),
-             (u'יצאתי', u'HEB'), (u'עם', u'HEB'), (u'אמא', u'HEB'), (u'למכולת', u'HEB')]
+    s1_gt = [(u'אתמול', Groups.Hebrew), (u'ב', Groups.Hebrew), (u'5', Groups.Number), 
+             (u'אחה"צ', Groups.Hebrew), (u',', Groups.Punctuation), (u'יצאתי', Groups.Hebrew), 
+             (u'עם', Groups.Hebrew), (u'אמא', Groups.Hebrew), (u'למכולת', Groups.Hebrew)]
 
     s2 = u' אתמול ב17:00 אבל 17:90 #################################זו לא שעה ו17:15.'
-    s2_gt = [(u'אתמול', u'HEB'), (u'ב', u'HEB'), (u'17:00', u'HOUR'), (u'אבל', u'HEB'),
-             (u'17', u'NUM'), (u':', u'PUNC'), (u'90', u'NUM'), (u'זו', u'HEB'),
-             (u'לא', u'HEB'), (u'שעה', u'HEB'), (u'ו', u'HEB'), (u'17:15', u'HOUR'), (u'.', u'PUNC')]
+    s2_gt = [(u'אתמול', Groups.Hebrew), (u'ב', Groups.Hebrew), (u'17:00', Groups.Hour), (u'אבל', Groups.Hebrew),
+             (u'17', Groups.Number), (u':', Groups.Punctuation), (u'90', Groups.Number), (u'זו', Groups.Hebrew),
+             (u'לא', Groups.Hebrew), (u'שעה', Groups.Hebrew), (u'ו', Groups.Hebrew), (u'17:15', Groups.Hour), 
+             (u'.', Groups.Punctuation)]
 
     sentences = [s1, s2]
     tokenization_ground_truth = [s1_gt, s2_gt]
@@ -87,13 +94,15 @@ def drop_line(print_results=False):
 
 def repeated_letters(print_results=False):
     s1 = u'אתמול ב5 אחה"צ, יצאתי גגגגגגגגגגגגגגגגג עם אמא למכולת'
-    s1_gt = [(u'אתמול', u'HEB'), (u'ב', u'HEB'), (u'5', u'NUM'), (u'אחה"צ', u'HEB'), (u',', u'PUNC'),
-             (u'יצאתי', u'HEB'), (u'עם', u'HEB'), (u'אמא', u'HEB'), (u'למכולת', u'HEB')]
+    s1_gt = [(u'אתמול', Groups.Hebrew), (u'ב', Groups.Hebrew), (u'5', Groups.Number), (u'אחה"צ', Groups.Hebrew), 
+             (u',', Groups.Punctuation), (u'יצאתי', Groups.Hebrew), (u'עם', Groups.Hebrew), (u'אמא', Groups.Hebrew), 
+             (u'למכולת', Groups.Hebrew)]
 
     s2 = u' אתמול ב17:00 אבל 17:90 זו לא שעה ו17:15. NNNNNNNNNNNNNNNNNNNNN'
-    s2_gt = [(u'אתמול', u'HEB'), (u'ב', u'HEB'), (u'17:00', u'HOUR'), (u'אבל', u'HEB'),
-             (u'17', u'NUM'), (u':', u'PUNC'), (u'90', u'NUM'), (u'זו', u'HEB'),
-             (u'לא', u'HEB'), (u'שעה', u'HEB'), (u'ו', u'HEB'), (u'17:15', u'HOUR'), (u'.', u'PUNC')]
+    s2_gt = [(u'אתמול', Groups.Hebrew), (u'ב', Groups.Hebrew), (u'17:00', Groups.Hour), (u'אבל', Groups.Hebrew),
+             (u'17', Groups.Number), (u':', Groups.Punctuation), (u'90', Groups.Number), (u'זו', Groups.Hebrew),
+             (u'לא', Groups.Hebrew), (u'שעה', Groups.Hebrew), (u'ו', Groups.Hebrew), (u'17:15', Groups.Hour), 
+             (u'.', Groups.Punctuation)]
 
     sentences = [s1, s2]
     tokenization_ground_truth = [s1_gt, s2_gt]
@@ -102,12 +111,12 @@ def repeated_letters(print_results=False):
 
 def quotation_mark(print_results=False):
     s1 = u'אני מודד אורך בס"מ ונפח בסמ"ק'
-    s1_gt = [(u'אני', u'HEB'), (u'מודד', u'HEB'), (u'אורך', u'HEB'), (u'בס"מ', u'HEB'),
-             (u'ונפח', u'HEB'), (u'בסמ"ק', u'HEB')]
+    s1_gt = [(u'אני', Groups.Hebrew), (u'מודד', Groups.Hebrew), (u'אורך', Groups.Hebrew), (u'בס"מ', Groups.Hebrew),
+             (u'ונפח', Groups.Hebrew), (u'בסמ"ק', Groups.Hebrew)]
 
     s2 = u'i don\'t know and i can\'t tell'
-    s2_gt = [(u'i', u'ENG'), (u'don\'t', u'ENG'), (u'know', u'ENG'), (u'and', u'ENG'),
-             (u'i', u'ENG'), (u'can\'t', u'ENG'), (u'tell', u'ENG')]
+    s2_gt = [(u'i', Groups.English), (u'don\'t', Groups.English), (u'know', Groups.English), (u'and', Groups.English),
+             (u'i', Groups.English), (u'can\'t', Groups.English), (u'tell', Groups.English)]
 
     sentences = [s1, s2]
     tokenization_ground_truth = [s1_gt, s2_gt]
@@ -116,12 +125,14 @@ def quotation_mark(print_results=False):
 
 def whitespace(print_results=False):
     s1 = u'אני מודד אורך בס"מ ונפח בסמ"ק.'
-    s1_gt = [(u'אני', u'HEB'), (u' ', u'WS'), (u'מודד', u'HEB'), (u' ', u'WS'), (u'אורך', u'HEB'), (u' ', u'WS'),
-             (u'בס"מ', u'HEB'), (u' ', u'WS'), (u'ונפח', u'HEB'), (u' ', u'WS'), (u'בסמ"ק', u'HEB'), (u'.', u'PUNC')]
+    s1_gt = [(u'אני', Groups.Hebrew), (u' ', Groups.Whitespace), (u'מודד', Groups.Hebrew), (u' ', Groups.Whitespace), 
+             (u'אורך', Groups.Hebrew), (u' ', Groups.Whitespace), (u'בס"מ', Groups.Hebrew), (u' ', Groups.Whitespace), 
+             (u'ונפח', Groups.Hebrew), (u' ', Groups.Whitespace), (u'בסמ"ק', Groups.Hebrew), (u'.', Groups.Punctuation)]
 
     s2 = u'לחשוב - Never tried that before.'
-    s2_gt = [(u'לחשוב', u'HEB'), (u' ', u'WS'), (u'-', u'PUNC'), (u' ', u'WS'), (u'Never', u'ENG'), (u' ', u'WS'),
-             (u'tried', u'ENG'), (u' ', u'WS'), (u'that', u'ENG'), (u' ', u'WS'), (u'before', u'ENG'), (u'.', u'PUNC')]
+    s2_gt = [(u'לחשוב', Groups.Hebrew), (u' ', Groups.Whitespace), (u'-', Groups.Punctuation), (u' ', Groups.Whitespace), 
+             (u'Never', Groups.English), (u' ', Groups.Whitespace), (u'tried', Groups.English), (u' ', Groups.Whitespace), 
+             (u'that', Groups.English), (u' ', Groups.Whitespace), (u'before', Groups.English), (u'.', Groups.Punctuation)]
 
     sentences = [s1, s2]
     tokenization_ground_truth = [s1_gt, s2_gt]
@@ -130,12 +141,12 @@ def whitespace(print_results=False):
 
 def abbreviations(print_results=False):
     s1 = u'He went to see the E.N.T'
-    s1_gt = [(u'He', u'ENG'), (u'went', u'ENG'), (u'to', u'ENG'), (u'see', u'ENG'),
-             (u'the', u'ENG'), (u'E.N.T', u'ENG')]
+    s1_gt = [(u'He', Groups.English), (u'went', Groups.English), (u'to', Groups.English), (u'see', Groups.English),
+             (u'the', Groups.English), (u'E.N.T', Groups.English)]
     s2 = u'e.g, I can eat a gallon of ice cream.'
-    s2_gt = [(u'e.g', u'ENG'), (u',', u'PUNC'), (u'I', u'ENG'), (u'can', u'ENG'),
-             (u'eat', u'ENG'), (u'a', u'ENG'), (u'gallon', u'ENG'), (u'of', u'ENG'),
-             (u'ice', u'ENG'), (u'cream', u'ENG'), (u'.', u'PUNC')]
+    s2_gt = [(u'e.g', Groups.English), (u',', Groups.Punctuation), (u'I', Groups.English), (u'can', Groups.English),
+             (u'eat', Groups.English), (u'a', Groups.English), (u'gallon', Groups.English), (u'of', Groups.English),
+             (u'ice', Groups.English), (u'cream', Groups.English), (u'.', Groups.Punctuation)]
 
     sentences = [s1, s2]
     tokenization_ground_truth = [s1_gt, s2_gt]
@@ -144,11 +155,11 @@ def abbreviations(print_results=False):
 
 def dash(print_results=False):
     s1 = u'אני רוצה לבדוק עברית-מודרנית'
-    s1_gt = [(u'אני', u'HEB'), (u'רוצה', u'HEB'), (u'לבדוק', u'HEB'), (u'עברית', u'HEB'), (u'-', u'PUNC'),
-             (u'מודרנית', u'HEB')]
+    s1_gt = [(u'אני', Groups.Hebrew), (u'רוצה', Groups.Hebrew), (u'לבדוק', Groups.Hebrew), 
+             (u'עברית', Groups.Hebrew), (u'-', Groups.Punctuation), (u'מודרנית', Groups.Hebrew)]
 
     s2 = u'מערבית־מודרנית'
-    s2_gt = [(u'מערבית', u'HEB'), (u'־', u'PUNC'), (u'מודרנית', u'HEB')]
+    s2_gt = [(u'מערבית', Groups.Hebrew), (u'־', Groups.Punctuation), (u'מודרנית', Groups.Hebrew)]
     sentences = [s1, s2]
     tokenization_ground_truth = [s1_gt, s2_gt]
     return compare('Dash', sentences, tokenization_ground_truth, print_results, with_whitespaces=False)
