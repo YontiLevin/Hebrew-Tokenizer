@@ -109,3 +109,10 @@ venv.bak/
 
 # data
 .data/
+
+# tests
+.speed_test/*
+hebrew_tokenizer2/*
+
+# vscode
+.vscode/*

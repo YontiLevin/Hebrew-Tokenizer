@@ -173,3 +173,6 @@ class Test(unittest.TestCase):
             print('\n{test_name:25s} {test_results}\n{line_breaker}'
                   .format(test_name=test_name, test_results=result.__str__(), line_breaker="-"*50))
         assert all(tests_results.values()), 'One of the tests failed'
+
+if __name__ == '__main__':
+    unittest.main()
