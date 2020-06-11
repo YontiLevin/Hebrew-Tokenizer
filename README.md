@@ -19,7 +19,7 @@ import hebrew_tokenizer as ht
 hebrew_text = "אתמול, 8.6.2018, בשעה 17:00 הלכתי עם אמא למכולת"
 tokens = ht.tokenize(hebrew_text)  # tokenize returns a generator!
 for grp, token, token_num, (start_index, end_index) in tokens:
-  print('{}, {}'.format(grp, token))
+    print('{}, {}'.format(grp, token))
 
 >>> Groups.HEBREW, 'אתמול'
 >>> Groups.PUNCTUATION, ',' 
@@ -35,7 +35,7 @@ for grp, token, token_num, (start_index, end_index) in tokens:
 # by default it doesn't return whitespaces but it can be done easily
 tokens = ht.tokenize(hebrew_text, with_whitespaces=True)  # notice the with_whitespace flag
 for grp, token, token_num, (start_index, end_index) in tokens:
-  print('{}, {}'.format(grp, token))
+    print('{}, {}'.format(grp, token))
   
 >>> Groups.HEBREW, 'אתמול'
 >>> Groups.WHITESPACE, ''
