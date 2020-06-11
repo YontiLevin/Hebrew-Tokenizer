@@ -17,43 +17,44 @@ No batteries included - No dependencies needed!
 ```python
 import hebrew_tokenizer as ht
 hebrew_text = "אתמול, 8.6.2018, בשעה 17:00 הלכתי עם אמא למכולת"
-tokens = ht.tokenize(text)  # tokenize returns a generator!
+tokens = ht.tokenize(hebrew_text)  # tokenize returns a generator!
 for grp, token, token_num, (start_index, end_index) in tokens:
-  print(grp, token)
+  print('{}, {}'.format(grp, token))
 
->>> (HEB, 'אתמול')
->>> (PUNC, ',' )
->>> (DATE, '8.6.2018')
->>> (PUNC, ',' )
->>> (HEB, 'בשעה')
->>> (HOUR, '17:00')
->>> (HEB, 'הלכתי')
->>> (HEB, 'עם')
->>> (HEB, 'אמא')
->>> (HEB, 'למכולת')
+>>> Groups.HEBREW, 'אתמול'
+>>> Groups.PUNCTUATION, ',' 
+>>> Groups.DATE, '8.6.2018'
+>>> Groups.PUNCTUATION, ',' 
+>>> Groups.HEBREW, 'בשעה'
+>>> Groups.HOUR, '17:00'
+>>> Groups.HEBREW, 'הלכתי'
+>>> Groups.HEBREW, 'עם'
+>>> Groups.HEBREW, 'אמא'
+>>> Groups.HEBREW, 'למכולת'
 
 # by default it doesn't return whitespaces but it can be done easily
-tokens = ht.tokenize(text, with_whitespaces=True)  # notice the with_whitespace flag
+tokens = ht.tokenize(hebrew_text, with_whitespaces=True)  # notice the with_whitespace flag
 for grp, token, token_num, (start_index, end_index) in tokens:
-  print(grp, token)
-
->>> (HEB, 'אתמול')
->>> (PUNC, ',' )
->>> (WS, ' ')
->>> (DATE, '8.6.2018')
->>> (PUNC, ',' )
->>> (WS, ' ')
->>> (HEB, 'בשעה')
->>> (WS, ' ')
->>> (HOUR, '17:00')
->>> (WS, ' ')
->>> (HEB, 'הלכתי')
->>> (WS, ' ')
->>> (HEB, 'עם')
->>> (WS, ' ')
->>> (HEB, 'אמא')
->>> (WS, ' ')
->>> (HEB, 'למכולת')
+  print('{}, {}'.format(grp, token))
+  
+>>> Groups.HEBREW, 'אתמול'
+>>> Groups.WHITESPACE, ''
+>>> Groups.PUNCTUATION, ',' 
+>>> Groups.WHITESPACE, ''
+>>> Groups.DATE, '8.6.2018'
+>>> Groups.PUNCTUATION, ','
+>>> Groups.WHITESPACE, ''
+>>> Groups.HEBREW, 'בשעה'
+>>> Groups.WHITESPACE, ''
+>>> Groups.HOUR, '17:00'
+>>> Groups.WHITESPACE, ''
+>>> Groups.HEBREW, 'הלכתי'
+>>> Groups.WHITESPACE, ''
+>>> Groups.HEBREW, 'עם'
+>>> Groups.WHITESPACE, ''
+>>> Groups.HEBREW, 'אמא'
+>>> Groups.WHITESPACE, ''
+>>> Groups.HEBREW, 'למכולת'
 ```
 
 ### Disclaimer
