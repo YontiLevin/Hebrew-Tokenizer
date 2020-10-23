@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # encoding: utf-8
 import sys
+import os
+print(os.path.abspath(os.getcwd()))
+sys.path.append(os.path.abspath(os.getcwd()))
 from hebrew_tokenizer.tokenizer import tokenizer
 
 

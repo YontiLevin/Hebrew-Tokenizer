@@ -7,12 +7,12 @@ from setuptools import setup, find_packages
 
 
 # Package meta-data.
-NAME = 'hebrew_tokenizer'
-DESCRIPTION = 'A very simple python tokenizer for Hebrew text'
-URL = 'https://github.com/yontilevin/hebrew_tokenizer'
-EMAIL = 'therealyontilevin@gmail.com'
-AUTHOR = 'Yonti Levin'
-VERSION = '1.0.3'
+NAME = "hebrew_tokenizer"
+DESCRIPTION = "A very simple python tokenizer for Hebrew text"
+URL = "https://github.com/yontilevin/hebrew_tokenizer"
+EMAIL = "therealyontilevin@gmail.com"
+AUTHOR = "Yonti Levin"
+VERSION = "2.0.0"
 
 # with open("README.md", "r", encoding='utf8') as fh:
 #     long_description = fh.read()
@@ -33,10 +33,10 @@ setup(
     python_requires=">=2.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*",
     packages=find_packages(),
     include_package_data=True,
-    license='MIT',
+    license="MIT",
     classifiers=[
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python',
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python",
         # 'Programming Language :: Python :: 2',
         # 'Programming Language :: Python :: 2.6',
         # 'Programming Language :: Python :: 2.7',
@@ -45,6 +45,5 @@ setup(
         # 'Programming Language :: Python :: 3.5',
         # Programming Language :: Python :: 3.6',
         "Operating System :: OS Independent",
-
     ],
 )

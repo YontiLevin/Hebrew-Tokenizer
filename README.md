@@ -6,6 +6,11 @@
 A very simple python tokenizer for Hebrew text.  
 No batteries included - No dependencies needed!
 
+### 23/10/2020 UPDATE
+Added support for Python 3.8+.
+The Code look like shit now BUT it's working:smile:.
+In the near future I will wrap it up nicely.
+
 ### Installation
 1. via pip
     1. ```pip install hebrew_tokenizer```
