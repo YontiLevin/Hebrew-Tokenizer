@@ -26,40 +26,40 @@ tokens = ht.tokenize(hebrew_text)  # tokenize returns a generator!
 for grp, token, token_num, (start_index, end_index) in tokens:
     print('{}, {}'.format(grp, token))
 
->>> Groups.HEBREW, 'אתמול'
->>> Groups.PUNCTUATION, ',' 
->>> Groups.DATE, '8.6.2018'
->>> Groups.PUNCTUATION, ',' 
->>> Groups.HEBREW, 'בשעה'
->>> Groups.HOUR, '17:00'
->>> Groups.HEBREW, 'הלכתי'
->>> Groups.HEBREW, 'עם'
->>> Groups.HEBREW, 'אמא'
->>> Groups.HEBREW, 'למכולת'
+>>> HEBREW, 'אתמול'
+>>> PUNCTUATION, ',' 
+>>> DATE, '8.6.2018'
+>>> PUNCTUATION, ',' 
+>>> HEBREW, 'בשעה'
+>>> HOUR, '17:00'
+>>> HEBREW, 'הלכתי'
+>>> HEBREW, 'עם'
+>>> HEBREW, 'אמא'
+>>> HEBREW, 'למכולת'
 
 # by default it doesn't return whitespaces but it can be done easily
 tokens = ht.tokenize(hebrew_text, with_whitespaces=True)  # notice the with_whitespace flag
 for grp, token, token_num, (start_index, end_index) in tokens:
     print('{}, {}'.format(grp, token))
   
->>> Groups.HEBREW, 'אתמול'
->>> Groups.WHITESPACE, ''
->>> Groups.PUNCTUATION, ',' 
->>> Groups.WHITESPACE, ''
->>> Groups.DATE, '8.6.2018'
->>> Groups.PUNCTUATION, ','
->>> Groups.WHITESPACE, ''
->>> Groups.HEBREW, 'בשעה'
->>> Groups.WHITESPACE, ''
->>> Groups.HOUR, '17:00'
->>> Groups.WHITESPACE, ''
->>> Groups.HEBREW, 'הלכתי'
->>> Groups.WHITESPACE, ''
->>> Groups.HEBREW, 'עם'
->>> Groups.WHITESPACE, ''
->>> Groups.HEBREW, 'אמא'
->>> Groups.WHITESPACE, ''
->>> Groups.HEBREW, 'למכולת'
+>>> HEBREW, 'אתמול'
+>>> WHITESPACE, ''
+>>> PUNCTUATION, ',' 
+>>> WHITESPACE, ''
+>>> DATE, '8.6.2018'
+>>> PUNCTUATION, ','
+>>> WHITESPACE, ''
+>>> HEBREW, 'בשעה'
+>>> WHITESPACE, ''
+>>> HOUR, '17:00'
+>>> WHITESPACE, ''
+>>> HEBREW, 'הלכתי'
+>>> WHITESPACE, ''
+>>> HEBREW, 'עם'
+>>> WHITESPACE, ''
+>>> HEBREW, 'אמא'
+>>> WHITESPACE, ''
+>>> HEBREW, 'למכולת'
 ```
 
 ### Disclaimer
