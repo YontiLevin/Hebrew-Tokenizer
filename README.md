@@ -8,7 +8,7 @@ No batteries included - No dependencies needed!
 
 ### UPDATES
 #### 28/04/21
-accented letters support was added
+accented letters support was added - great work [Daniel](https://github.com/Gilthans) 👊
 
 #### 23/10/2020
 Added support for Python 3.8+.   
