@@ -103,8 +103,17 @@ def hebrew_and_english(print_results=False):
         (u".", Groups.PUNCTUATION),
     ]
 
-    sentences = [s1, s2]
-    tokenization_ground_truth = [s1_gt, s2_gt]
+    s3 = u"ביקרתי ב-São Paulo"
+    s3_gt = [
+        (u"ביקרתי", Groups.HEBREW),
+        (u"ב", Groups.HEBREW),
+        (u"-", Groups.PUNCTUATION),
+        (u"São", Groups.ENGLISH),
+        (u"Paulo", Groups.ENGLISH),
+    ]
+
+    sentences = [s1, s2, s3]
+    tokenization_ground_truth = [s1_gt, s2_gt, s3_gt]
     return compare(
         "Hebrew and English", sentences, tokenization_ground_truth, print_results
     )
