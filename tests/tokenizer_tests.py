@@ -409,8 +409,21 @@ def dates(print_results=False):
 
     sentences = [s1, s2]
     tokenization_ground_truth = [s1_gt, s2_gt]
-    return compare("Whitespace", sentences, tokenization_ground_truth, print_results)
+    return compare("Dates", sentences, tokenization_ground_truth, print_results)
 
+
+def hebrew_accents(print_results=False):
+    s1 = u'מָתֵמָטִיקָה זה קשה!'
+    s1_gt = [
+        (u"מָתֵמָטִיקָה", Groups.HEBREW),
+        (u"זה", Groups.HEBREW),
+        (u"קשה", Groups.HEBREW),
+        (u"!", Groups.PUNCTUATION),
+    ]
+
+    sentences = [s1]
+    tokenization_ground_truth = [s1_gt]
+    return compare("hebrew_accents", sentences, tokenization_ground_truth, print_results)
 
 class Test(unittest.TestCase):
     tests = {
@@ -424,6 +437,7 @@ class Test(unittest.TestCase):
         "H. Abbreviations": abbreviations,
         "I. Dash": dash,
         "J. Dates": dates,
+        "K. Hebrew accents": hebrew_accents
     }
 
     def test_tokenizer(self):

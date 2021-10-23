@@ -5,7 +5,8 @@ from hebrew_tokenizer.groups import Groups
 
 
 # patterns
-_heb = r"[א-ת]" + "{1,}[']?[\"]*" + "[א-ת]" + "{1,}|" + "[א-ת]"
+_heb_with_accents = r"[\u05D0-\u05EA|\u0591-\u05BD|\u05BF-\u05C4]"
+_heb = _heb_with_accents + "{1,}[']?[\"]*" + _heb_with_accents + "{1,}|" + _heb_with_accents
 _eng = r"[a-zA-ZÀ-ÿ]{1,}[\']?[\"]*[a-zA-Z0-9À-ÿ]{1,}|[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ0-9]*"
 _eng_abbrev = r"[a-zA-Z]{1}\.[a-zA-Z]{1}(\.[a-zA-Z]){0,1}"
 _hour = r"[0-2]?[0-9]:[0-5][0-9]"

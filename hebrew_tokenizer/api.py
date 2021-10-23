@@ -13,7 +13,7 @@ def tokenize(text, with_whitespaces=False):
 
 
 if __name__ == '__main__':
-    sent = 'aspirin   aaaaaa  aaaaaaaaaaa —–  dipyridamole'
+    sent = 'מָתֵמָטִיקָה זה קשה'
     sent_tokens = tokenize(sent)
     for st in sent_tokens:
         print(st)

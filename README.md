@@ -7,6 +7,9 @@ A very simple python tokenizer for Hebrew text.
 No batteries included - No dependencies needed!
 
 ### UPDATES
+#### 23/10/21
+Hebrew accents/punctuation(ניקוד) support added.
+
 #### 28/04/21
 accented letters support was added - great work [Daniel](https://github.com/Gilthans) 👊
 
