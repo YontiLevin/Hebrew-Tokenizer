@@ -19,6 +19,7 @@ _punc = r"[,;:\-&!\?\.\]/)'`\"\*\+=_~}\[('`\"{/\\\<\>#%־ ֿֿ]"
 _bad_punc = r"[\'\"]"
 _bom = r"\xef\xbb\xbf|\ufeff|\u200e"
 _other = r"\xa0|\xe2?\x80\xa2?[[^׳-׳×a-zA-Z0-9!\?\.,:;\-()\[\]{}]+"
+_foreign = r"[\w]{1,}[\']?[\"]*[\w|0-9]{1,}|[\w][\w|0-9]*"
 _whitespace = r"\s+"
 _linebreaks = (
     r"{3,}|".join(
@@ -59,6 +60,7 @@ def get_lexicon(python_version_less_than_3=False, python_version_more_than_3_7=F
         lexicon += [(_heb.decode("utf-8"), Groups.HEBREW_1)]
 
     lexicon += [(_heb, Groups.HEBREW_2), (_other, Groups.OTHER)]
+    lexicon += [(_foreign, Groups.FOREIGN)]
 
     if python_version_more_than_3_7:
         lexicon = [(b, a) for a, b in lexicon]

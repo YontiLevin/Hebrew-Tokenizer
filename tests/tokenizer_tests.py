@@ -118,6 +118,25 @@ def hebrew_and_english(print_results=False):
         "Hebrew and English", sentences, tokenization_ground_truth, print_results
     )
 
+def hebrew_and_foreign(print_results=True):
+    cryllic_MTC = b'\xD0\x9C\xD0\xA2\xD0\xA1'.decode('utf8')
+    cryllic_MTC3 = b'\xD0\x9C\xD0\xA2\xD0\xA13'.decode('utf8')
+    cryllic_M3TC = b'\xD0\x9C3\xD0\xA2\xD0\xA1'.decode('utf8')
+    english_MTC = 'MTC'
+    hebrew_MTC = 'מטח'
+    s1 = f'{cryllic_MTC} {cryllic_MTC3} {cryllic_M3TC}-{english_MTC} {hebrew_MTC}'
+    s1_gt = [
+        (cryllic_MTC, Groups.FOREIGN),
+        (cryllic_MTC3, Groups.FOREIGN),
+        (cryllic_M3TC, Groups.FOREIGN),
+        ('-', Groups.PUNCTUATION),
+        (english_MTC, Groups.ENGLISH),
+        (hebrew_MTC, Groups.HEBREW)
+    ]
+    return compare(
+        "Hebrew and Foreign languages", [s1], [s1_gt], print_results
+    )
+
 
 def hebrew_and_numbers(print_results=False):
     s1 = u'אתמול ב5 אחה"צ, יצאתי עם אמא למכולת'
