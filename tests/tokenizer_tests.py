@@ -456,7 +456,8 @@ class Test(unittest.TestCase):
         "H. Abbreviations": abbreviations,
         "I. Dash": dash,
         "J. Dates": dates,
-        "K. Hebrew accents": hebrew_accents
+        "K. Hebrew accents": hebrew_accents,
+        "L. Hebrew and Foreign": hebrew_and_foreign
     }
 
     def test_tokenizer(self):
