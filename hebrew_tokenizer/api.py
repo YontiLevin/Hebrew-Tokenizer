@@ -18,3 +18,8 @@ if __name__ == '__main__':
     for st in sent_tokens:
         print(st)
 
+    sent = 'MTC'
+    sent_tokens = tokenize(sent)
+    print(list(sent_tokens))
+    for st in sent_tokens:
+        print(st)

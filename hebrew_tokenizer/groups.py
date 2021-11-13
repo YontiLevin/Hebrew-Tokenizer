@@ -15,6 +15,7 @@ class Groups:
     HEBREW_2 = "HEBREW_2"
     HEBREW = "HEBREW"
     OTHER = "OTHER"
+    ALPHA_NON_ENG = "ALPHANUMERIC_NON_ENG"
     LINEBREAK = "LINEBREAK"
     BOM = "BOM"
     REPEATED = "REPEATED"
@@ -36,6 +37,7 @@ GroupsReverseMapping = {
     "HEBREW_2": "HEBREW",
     "HEBREW": "HEBREW",
     "OTHER": "OTHER",
+    "ALPHANUMERIC_NON_ENG": "ALPHANUMERIC_NON_ENG",
     "LINEBREAK": None,
     "BOM": None,
     "REPEATED": None,
